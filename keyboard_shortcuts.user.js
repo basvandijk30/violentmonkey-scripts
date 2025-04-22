@@ -11,6 +11,21 @@
 const { register } = VM.shortcut;
 
 VM.shortcut.register('alt-u', () => {
-    // Open the current page in a new tab (duplicate tab)
+    // Duplicate current tab.
     GM_openInTab(window.location.href, { active: true, insert: true });
 });
+
+VM.shortcut.register('alt-shift-f', () => {
+    // Open new tab and search Google for selected text.
+    // Useful in combination with Caret Browsing or Vimium visual mode.
+    if ((selection = window.getSelection().toString())) {
+        GM_openInTab('https://www.google.com/search?q=' + encodeURIComponent(selection), { active: true, insert: true });
+    }
+});
+
+VM.shortcut.register('alt-shift-p', () => {
+    // Proxy current tab through 12ft.io (bypass paywalls).
+    window.location = 'https://12ft.io/proxy?q=' + window.location;
+});
+
+console.log('Violentmonkey: Keyboard Shortcuts loaded');
